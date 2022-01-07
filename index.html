@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Variables with JS</title>
+    <link rel="shortcut icon" href="./cover.jpg" type="image/x-icon">
+</head>
+
+<body>
+    <!-- css -->
+    <style>
+        :root {
+            --base: #ffc600;
+            --spacing: 10px;
+            --blur: 10px;
+        }
+
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+        }
+
+        .hl {
+            color: var(--base);
+        }
+
+        body {
+            text-align: center;
+            background: #193549;
+            color: white;
+            font-family: 'helvetica neue', sans-serif;
+            font-weight: 100;
+            font-size: 50px;
+        }
+
+        .controls {
+            margin-bottom: 50px;
+        }
+
+        input {
+            width: 100px;
+        }
+
+        /* responsive */
+        @media only screen and (max-width: 600px) {
+            .controls, body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                flex-wrap: wrap;
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            h2,
+            .hl {
+                display: flex;
+                flex-direction: column;
+                font-size: 45px;
+            }
+
+            img {
+                width: 80%;
+            }
+        }
+    </style>
+
+    <!-- html -->
+    <h2>Update CSS Variables with <span class='hl'>Javascript</span></h2>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+        <label for="base">Base Color</label>
+        <input id="base" type="color" name="base" value="#ffc600">
+    </div>
+
+    <img src="./cover.jpg">
+
+    <!-- js -->
+    <script>
+        const inputs = document.querySelectorAll(".controls input");
+
+        function handleUpdate() {
+            const suffix = this.dataset.sizing || " ";
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+        }
+
+        inputs.forEach(input => input.addEventListener("change", handleUpdate));
+        inputs.forEach(input => input.addEventListener("mousemove", handleUpdate));
+
+    </script>
+</body>
+
+</html>
